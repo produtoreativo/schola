@@ -1,0 +1,7 @@
+## Deploy da Function
+chmod +x deploy.sh
+./deploy.sh
+
+## Testando a Function
+gcloud functions call helloGET
+
