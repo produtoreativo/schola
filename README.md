@@ -24,9 +24,27 @@ gcloud config set compute/region us-central1
 
 ## Criando a primeira Function
 
+### Criando o repo
+gcloud source repos create schola
+gcloud source repos clone schola
+
 ### Deploy da Function
 chmod +x deploy.sh
 ./deploy.sh
+
+```
+#!/bin/bash
+
+export PROJECT_ID=$(gcloud config list --format 'value(core.project)')
+export REPOSITORY_ID=schola
+
+export URL=https://source.developers.google.com/projects/$PROJECT_ID/repos/$REPOSITORY_ID
+
+gcloud functions deploy helloGET \
+--source $URL \
+--trigger-http \
+--runtime=nodejs18;
+```
 
 ### Testando a Function
 gcloud functions call helloGET
@@ -39,12 +57,13 @@ gcloud functions delete helloGET --region us-central1
 ## Criando Build automatizado
 
 ## Criacao do trigger
-gcloud builds triggers create hello-cloud-source-repositories \
+gcloud builds triggers create cloud-source-repositories \
+    --name=trigger-schola \
     --repo=schola \
-    --branch-pattern=master \
+    --region=us-central1 \
     --build-config=cloudbuild.yaml \
-    --events push
-    --service-account=SERVICE_ACCOUNT
+    --branch-pattern=master
 
 ### Excluindo o trigger
-gcloud builds triggers delete TRIGGER_NAME
+gcloud builds triggers list --region=us-central1
+gcloud builds triggers delete trigger-schola --region=us-central1
