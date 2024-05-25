@@ -6,3 +6,8 @@
 exports.helloGET = (req, res) => {
   res.send('Hello from Cloud Functions and Cloud Source Repositories');
 };
+
+// Listagem de cursos
+// Inscrição no curso
+// Upload do comprovante de pgto
+// Criação da credencial [certificado]
